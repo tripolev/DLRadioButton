@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * @brief Size of icon, default is kDefaulIconSize.
  */
-@property (nonatomic) IBInspectable CGFloat iconSize;
+@property (nonatomic) IBInspectable CGSize iconSize;
 
 /**
  * @brief Color of icon, default is title color for current UIControlState.
@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * @brief Size of selection indicator, default is iconSize * 0.5.
  */
-@property (nonatomic) IBInspectable CGFloat indicatorSize;
+@property (nonatomic) IBInspectable CGSize indicatorSize;
 
 /**
  * @brief Color of selection indicator, default is title color for current UIControlState.

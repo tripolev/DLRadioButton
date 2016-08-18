@@ -1,6 +1,6 @@
 #import "DLRadioButton.h"
 
-static const CGFloat kDefaultIconSize = 15.0;
+static const CGSize kDefaultIconSize = {15.0, 15.0};
 static const CGFloat kDefaultMarginWidth = 5.0;
 static const CFTimeInterval kDefaultAnimationDuration = 0.3;
 static NSString * const kGeneratedIconName = @"Generated Icon";
@@ -87,21 +87,21 @@ static BOOL _groupModifing = NO;
 }
 
 - (UIImage *)drawIconWithSelection:(BOOL)selected {
-    UIColor *defaulColor = selected ? [self titleColorForState:UIControlStateSelected | UIControlStateHighlighted] : [self titleColorForState:UIControlStateNormal];
-    UIColor *iconColor = self.iconColor ? self.iconColor : defaulColor;
-    UIColor *indicatorColor = self.indicatorColor ? self.indicatorColor : defaulColor;
-    CGFloat iconSize = self.iconSize;
-    CGFloat iconStrokeWidth = self.iconStrokeWidth ? self.iconStrokeWidth : iconSize / 9;
-    CGFloat indicatorSize = self.indicatorSize ? self.indicatorSize : iconSize * 0.5;
+    UIColor *defaultColor = selected ? [self titleColorForState:UIControlStateSelected | UIControlStateHighlighted] : [self titleColorForState:UIControlStateNormal];
+    UIColor *iconColor = self.iconColor ? self.iconColor : defaultColor;
+    UIColor *indicatorColor = self.indicatorColor ? self.indicatorColor : defaultColor;
+    CGSize iconSize = self.iconSize;
+    CGFloat iconStrokeWidth = self.iconStrokeWidth ? self.iconStrokeWidth : iconSize.width / 9;
+    CGSize indicatorSize = !CGSizeEqualToSize(self.indicatorSize, CGSizeZero) ? self.indicatorSize : CGSizeMake(iconSize.width * 0.5, iconSize.height * 0.5);
     
-    CGRect rect = CGRectMake(0, 0, iconSize, iconSize);
+    CGRect rect = CGRectMake(0, 0, iconSize.width, iconSize.height);
     CGContextRef context = UIGraphicsGetCurrentContext();
     UIGraphicsPushContext(context);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
     
     // draw icon
     UIBezierPath* iconPath;
-    CGRect iconRect = CGRectMake(iconStrokeWidth / 2, iconStrokeWidth / 2, iconSize - iconStrokeWidth, iconSize - iconStrokeWidth);
+    CGRect iconRect = CGRectMake(iconStrokeWidth / 2, iconStrokeWidth / 2, iconSize.width - iconStrokeWidth, iconSize.height - iconStrokeWidth);
     if (self.isIconSquare) {
         iconPath = [UIBezierPath bezierPathWithRect:iconRect];
     } else {
@@ -115,7 +115,7 @@ static BOOL _groupModifing = NO;
     // draw indicator
     if (selected) {
         UIBezierPath* indicatorPath;
-        CGRect indicatorRect = CGRectMake((iconSize - indicatorSize) / 2, (iconSize - indicatorSize) / 2, indicatorSize, indicatorSize);
+        CGRect indicatorRect = CGRectMake((iconSize.width - indicatorSize.width) / 2, (iconSize.height - indicatorSize.height) / 2, indicatorSize.width, indicatorSize.width);
         if (self.isIconSquare) {
             indicatorPath = [UIBezierPath bezierPathWithRect:indicatorRect];
         } else {
