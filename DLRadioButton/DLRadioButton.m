@@ -107,15 +107,26 @@ static BOOL _groupModifing = NO;
     } else {
         iconPath = [UIBezierPath bezierPathWithOvalInRect:iconRect];
     }
+    
+    if (self.iconDashed) {
+        CGFloat iconDashArray[2];
+        iconDashArray[0] = 10;
+        iconDashArray[1] = 5;
+        [iconPath setLineDash:iconDashArray count:2 phase:0];
+    }
     [iconColor setStroke];
     iconPath.lineWidth = iconStrokeWidth;
     [iconPath stroke];
+        
     CGContextAddPath(context, iconPath.CGPath);
     
     // draw indicator
     if (selected) {
+        
         UIBezierPath* indicatorPath;
-        CGRect indicatorRect = CGRectMake((iconSize.width - indicatorSize.width) / 2, (iconSize.height - indicatorSize.height) / 2, indicatorSize.width, indicatorSize.width);
+        
+        CGRect indicatorRect = CGRectMake((iconSize.width - indicatorSize.width) / 2, (iconSize.height - indicatorSize.height) / 2, indicatorSize.width, indicatorSize.height);
+        
         if (self.isIconSquare) {
             indicatorPath = [UIBezierPath bezierPathWithRect:indicatorRect];
         } else {
@@ -123,7 +134,15 @@ static BOOL _groupModifing = NO;
         }
         [indicatorColor setFill];
         [indicatorPath fill];
+        
+        if (self.iconDashed) {
+            UIBezierPath* dashPath = [UIBezierPath bezierPathWithRect: CGRectMake(indicatorRect.origin.x + indicatorRect.size.width/2-5, indicatorRect.origin.y, 10, indicatorRect.size.height)];
+            [[UIColor whiteColor] setFill];
+            [dashPath fill];
+        }
+        
         CGContextAddPath(context, indicatorPath.CGPath);
+        
     }
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();

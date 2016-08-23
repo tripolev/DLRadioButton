@@ -75,6 +75,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, getter = isIconSquare) IBInspectable BOOL iconSquare;
 
 /**
+ * @brief Whether icon is dashed, default is NO.
+ */
+@property (nonatomic, getter = isIconDashed) IBInspectable BOOL iconDashed;
+
+/**
  * @brief Image for radio button icon (optional).
  */
 @property (nonatomic) IBInspectable UIImage *icon;
